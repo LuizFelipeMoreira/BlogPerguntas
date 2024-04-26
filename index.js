@@ -12,12 +12,14 @@ app.use(express.static('public'));
 app.use('body-parser', bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-connection
-  .authenticate()
-  .then(() => {
+(async () => {
+  try {
+    await connection.authenticate();
     console.log('Conexao feita com sucesso !');
-  })
-  .catch((error) => console.log(error));
+  } catch (error) {
+    console.log(error);
+  }
+})();
 
 app.use('/', categoriesController);
 app.use('/', articlesController);
