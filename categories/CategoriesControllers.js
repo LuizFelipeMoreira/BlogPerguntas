@@ -21,4 +21,9 @@ router.post('/categories/save', async (req, res) => {
   }
 });
 
+router.get('/admin/categories', async (req, res) => {
+  const categories = await Category.findAll({ raw: true });
+
+  res.render('admin/categories/index', { categories });
+});
 module.exports = router;
