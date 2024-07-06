@@ -26,4 +26,17 @@ router.get('/admin/categories', async (req, res) => {
 
   res.render('admin/categories/index', { categories });
 });
+
+router.post('/categories/delete', async (req, res) => {
+  const { id } = req.body;
+  const checkId = !isNaN(id) && id !== undefined;
+
+  if (checkId) {
+    await Category.destroy({ where: { id: id } });
+    res.redirect('/admin/categories');
+  } else {
+    res.redirect('/admin/categories');
+  }
+});
+
 module.exports = router;
