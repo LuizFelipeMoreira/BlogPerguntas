@@ -47,7 +47,7 @@
                                    <%= category.slug %>
                               </td>
                               <td>
-                                   <button class="btn btn-warning">Editar</button>
+                                   <a href="/admin/categories/edit/<%= category.id %>" class="btn btn-warning">Editar</a>
 
                                    <form action="/categories/delete" method="POST" style="display: inline;" onsubmit="confirmSubmit(event, this)">
                                         <input type="hidden" name="id" value="<%= category.id %>">

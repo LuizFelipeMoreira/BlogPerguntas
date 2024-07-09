@@ -15,6 +15,8 @@ router.post('/categories/save', async (req, res) => {
 
   if (title) {
     await Category.create({ title, slug: slugify(title) });
+
+    res.redirect('/admin/categories');
   } else {
     console.log('erro, nop calvo');
     res.redirect('/admin/categories/new');
@@ -39,4 +41,41 @@ router.post('/categories/delete', async (req, res) => {
   }
 });
 
+router.get('/admin/categories/edit/:id', async (req, res) => {
+  const { id } = req.params;
+
+  if (isNaN(id)) {
+    res.redirect('/admin/categories');
+  }
+
+  try {
+    const category = await Category.findByPk(id);
+
+    if (category !== undefined) {
+      res.render('admin/categories/edit', { category });
+    } else {
+      res.redirect('/admin/categories');
+    }
+  } catch (error) {
+    res.redirect('/admin/categories');
+  }
+});
+
+router.post('/categories/update', async (req, res) => {
+  const { id, title } = req.body;
+  const checkId = !isNaN(id) && id !== undefined;
+
+  try {
+    await Category.update(
+      { title, slug: slugify(title) },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+
+    res.redirect('/admin/categories');
+  } catch (error) {}
+});
 module.exports = router;
