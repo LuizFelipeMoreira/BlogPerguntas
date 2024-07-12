@@ -5,7 +5,7 @@ const Article = require('./Article');
 const slugify = require('slugify');
 
 router.get('/admin/articles', (req, res) => {
-  res.send('Rota de Artigos');
+  res.render('./admin/articles/index');
 });
 
 router.get('/admin/articles/new', async (req, res) => {
@@ -17,6 +17,7 @@ router.get('/admin/articles/new', async (req, res) => {
 router.post('/articles/save', async (req, res) => {
   const { title, body, category } = req.body;
 
+  console.log('chegou na rota');
   try {
     await Article.create({
       title,
