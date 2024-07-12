@@ -36,4 +36,16 @@ router.post('/articles/save', async (req, res) => {
   }
 });
 
+router.post('/articles/delete', async (req, res) => {
+  const { id } = req.body;
+  const checkId = !isNaN(id) && id !== undefined;
+
+  if (checkId) {
+    await Article.destroy({ where: { id: id } });
+    res.redirect('/admin/articles');
+  } else {
+    res.redirect('/admin/articles');
+  }
+});
+
 module.exports = router;
