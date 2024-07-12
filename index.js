@@ -27,8 +27,10 @@ app.use(bodyParser.json());
 app.use('/', categoriesController);
 app.use('/', articlesController);
 
-app.get('/', (req, res) => {
-  res.render('index');
+app.get('/', async (req, res) => {
+  const articles = await Article.findAll();
+
+  res.render('index', { articles });
 });
 
 app.listen(8080, () => {
