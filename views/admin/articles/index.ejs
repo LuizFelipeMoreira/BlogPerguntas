@@ -37,7 +37,23 @@
                </thead>
 
                <tbody>
-
+                    <% articles.forEach(article=> { %>
+                         <tr>
+                              <td>
+                                   <%= article.id %>
+                              </td>
+                              <td>
+                                   <%= article.title %>
+                              </td>
+                              <td>
+                                   <%= article.slug %>
+                              </td>
+                              <td>
+                                   <%= article.category.id %>
+                              </td>
+                              <td>Acoes</td>
+                         </tr>
+                         <% })%>
                </tbody>
           </table>
 
