@@ -8,6 +8,7 @@ const articlesController = require('./articles/Articles.Controller');
 
 const Article = require('./articles/Article');
 const Category = require('./categories/Category');
+const { where } = require('sequelize');
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -28,9 +29,24 @@ app.use('/', categoriesController);
 app.use('/', articlesController);
 
 app.get('/', async (req, res) => {
-  const articles = await Article.findAll();
+  const articles = await Article.findAll({ order: [['id', 'DESC']] });
 
   res.render('index', { articles });
+});
+
+app.get('/:slug', async (req, res) => {
+  const { slug } = req.params;
+  try {
+    const article = await Article.findOne({ where: { slug } });
+
+    if (article !== undefined) {
+      res.render('article', { article });
+    } else {
+      res.redirect('/');
+    }
+  } catch (error) {
+    res.redirect('/');
+  }
 });
 
 app.listen(8080, () => {
