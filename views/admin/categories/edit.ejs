@@ -9,33 +9,26 @@
 </head>
 
 <body>
-     <nav class="navbar navbar-dark navbar-expand-lg bg-primary p-3 ">
-          <a href="/" class="navbar-brand">GuiaPress</a>
+     <%- include('../../partials/navbar') %>
 
-          <ul class="navbar-nav ">
-               <li class="nav-item"><a href="/admin/categories" class="nav-link">Categorias</a></li>
-               <li class="nav-item"><a href="/admin/articles" class="nav-link">Artigos</a></li>
-          </ul>
-     </nav>
+          <div class="container">
+               <br>
+               <div class="card">
+                    <div class="card-header">
+                         <h2>Edição de Categoria</h2>
+                    </div>
 
-     <div class="container">
-          <br>
-          <div class="card">
-               <div class="card-header">
-                    <h2>Edição de Categoria</h2>
+                    <div class="card-body">
+                         <form action="/categories/update" method="POST">
+                              <input class="form-control" type="text" name="title" id="title" placeholder="Defina o titulo da categoria" value="<%= category.title %>">
+                              <input type="hidden" value="<%= category.id %>" name="id" id="<%= category.id %>">
+                              <button class="btn btn-success mt-2">Atualizar</button>
+                         </form>
+                    </div>
                </div>
 
-               <div class="card-body">
-                    <form action="/categories/update" method="POST">
-                         <input class="form-control" type="text" name="title" id="title" placeholder="Defina o titulo da categoria" value="<%= category.title %>">
-                         <input type="hidden" value="<%= category.id %>" name="id" id="<%= category.id %>">
-                         <button class="btn btn-success mt-2">Atualizar</button>
-                    </form>
-               </div>
           </div>
-
-     </div>
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>

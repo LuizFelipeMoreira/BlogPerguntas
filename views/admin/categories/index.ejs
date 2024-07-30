@@ -9,75 +9,68 @@
 </head>
 
 <body>
-     <nav class="navbar navbar-dark navbar-expand-lg bg-primary p-3 ">
-          <a href="/" class="navbar-brand">GuiaPress</a>
+     <%- include('../../partials/navbar') %>
 
-          <ul class="navbar-nav ">
-               <li class="nav-item"><a href="/admin/categories" class="nav-link">Categorias</a></li>
-               <li class="nav-item"><a href="/admin/articles" class="nav-link">Artigos</a></li>
-          </ul>
-     </nav>
+          <div class="container">
 
-     <div class="container">
-
-          <h2>Categorias</h2>
-          <a href="/admin/categories/new" class="btn btn-success">Criar nova Categoria</a>
-          <hr />
+               <h2>Categorias</h2>
+               <a href="/admin/categories/new" class="btn btn-success">Criar nova Categoria</a>
+               <hr />
 
 
-          <table class="table table-bordered">
-               <thead>
-                    <tr>
-                         <th>id</th>
-                         <th>Titulo</th>
-                         <th>slug</th>
-                         <th>Ações</th>
-                    </tr>
-               </thead>
-
-               <tbody>
-                    <% categories.forEach(category=> { %>
+               <table class="table table-bordered">
+                    <thead>
                          <tr>
-                              <td>
-                                   <%= category.id %>
-                              </td>
-                              <td>
-                                   <%= category.title %>
-                              </td>
-                              <td>
-                                   <%= category.slug %>
-                              </td>
-                              <td>
-                                   <a href="/admin/categories/edit/<%= category.id %>" class="btn btn-warning">Editar</a>
-
-                                   <form action="/categories/delete" method="POST" style="display: inline;" onsubmit="confirmSubmit(event, this)">
-                                        <input type="hidden" name="id" value="<%= category.id %>">
-                                        <button type="submit" class="btn btn-danger">Deletar</button>
-                                   </form>
-                              </td>
+                              <th>id</th>
+                              <th>Titulo</th>
+                              <th>slug</th>
+                              <th>Ações</th>
                          </tr>
-                         <% }) %>
-               </tbody>
-          </table>
+                    </thead>
+
+                    <tbody>
+                         <% categories.forEach(category=> { %>
+                              <tr>
+                                   <td>
+                                        <%= category.id %>
+                                   </td>
+                                   <td>
+                                        <%= category.title %>
+                                   </td>
+                                   <td>
+                                        <%= category.slug %>
+                                   </td>
+                                   <td>
+                                        <a href="/admin/categories/edit/<%= category.id %>" class="btn btn-warning">Editar</a>
+
+                                        <form action="/categories/delete" method="POST" style="display: inline;" onsubmit="confirmSubmit(event, this)">
+                                             <input type="hidden" name="id" value="<%= category.id %>">
+                                             <button type="submit" class="btn btn-danger">Deletar</button>
+                                        </form>
+                                   </td>
+                              </tr>
+                              <% }) %>
+                    </tbody>
+               </table>
 
 
-     </div>
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+          </div>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-     <script>
-          function confirmSubmit(event) {
-               const form = event.target;
-               const decision = confirm("Tem certeza que deseja deletar esta categoria?");
-               event.preventDefault();
+          <script>
+               function confirmSubmit(event) {
+                    const form = event.target;
+                    const decision = confirm("Tem certeza que deseja deletar esta categoria?");
+                    event.preventDefault();
 
-               if (decision) {
-                    form.submit();
-               }
+                    if (decision) {
+                         form.submit();
+                    }
 
-               console.log("submit cancelado");
-               console.log(form);
-          }          
-     </script>
+                    console.log("submit cancelado");
+                    console.log(form);
+               }          
+          </script>
 </body>
 
 </html>
