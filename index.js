@@ -30,17 +30,19 @@ app.use('/', articlesController);
 
 app.get('/', async (req, res) => {
   const articles = await Article.findAll({ order: [['id', 'DESC']] });
+  const categories = await Category.findAll();
 
-  res.render('index', { articles });
+  res.render('index', { articles, categories });
 });
 
 app.get('/:slug', async (req, res) => {
   const { slug } = req.params;
   try {
     const article = await Article.findOne({ where: { slug } });
+    const categories = await Category.findAll();
 
     if (article !== undefined) {
-      res.render('article', { article });
+      res.render('article', { article, categories });
     } else {
       res.redirect('/');
     }
