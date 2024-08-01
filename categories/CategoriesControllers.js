@@ -66,14 +66,16 @@ router.post('/categories/update', async (req, res) => {
   const checkId = !isNaN(id) && id !== undefined;
 
   try {
-    await Category.update(
-      { title, slug: slugify(title) },
-      {
-        where: {
-          id,
-        },
-      }
-    );
+    if (checkId) {
+      await Category.update(
+        { title, slug: slugify(title) },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+    }
 
     res.redirect('/admin/categories');
   } catch (error) {}
