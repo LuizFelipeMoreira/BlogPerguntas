@@ -13,13 +13,15 @@
           <a href="/" class="navbar-brand">GuiaPress</a>
 
           <ul class="navbar-nav ">
-               <li class="nav-link">Home</a></li>
+               <li class="nav-link"><a href="/">Home</a></li>
           </ul>
 
           <% categories.forEach(category=> {%>
                <ul class="navbar-nav">
-                    <li class="nav-link">
-                         <%= category.title%></a>
+                    <li>
+                         <a class="nav-link" href="/category/<%= category.slug %>">
+                              <%= category.title%>
+                         </a>
                     </li>
                </ul>
                <%})%>

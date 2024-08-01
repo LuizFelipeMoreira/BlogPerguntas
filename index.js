@@ -51,6 +51,31 @@ app.get('/:slug', async (req, res) => {
   }
 });
 
+app.get('/category/:slug', async (req, res) => {
+  const { slug } = req.params;
+
+  try {
+    const categorie = await Category.findOne({
+      where: { slug },
+      include: [{ model: Article }],
+    });
+
+    if (categorie) {
+      console.log('entrou no if');
+    }
+
+    if (categorie !== undefined) {
+      const categories = await Category.findAll({
+        incude: [{ model: Article }],
+      });
+
+      res.render('index', { categories, articles: categorie.articles });
+    } else {
+      res.redirect('/');
+    }
+  } catch (error) {}
+});
+
 app.listen(8080, () => {
   console.log('Servidor iniciado com sucesso !');
 });
