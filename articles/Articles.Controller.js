@@ -48,4 +48,37 @@ router.post('/articles/delete', async (req, res) => {
   }
 });
 
+router.get('/admin/articles/edit/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const categories = await Category.findAll();
+    const article = await Article.findByPk(id);
+    console.log(article.id);
+
+    res.render('./admin/articles/edit', { categories, article });
+  } catch (error) {
+    console.log('falhou  mas tentou pilantra');
+  }
+});
+
+router.post('/articles/update', async (req, res) => {
+  const { id, title, body, category } = req.body;
+
+  if (isNaN(id)) {
+    res.redirect('/admin/articles');
+  }
+
+  try {
+    await Article.update(
+      { title, slug: slugify(title), body, category },
+      { where: { id } }
+    );
+
+    res.redirect('/admin/articles');
+  } catch (error) {
+    res.send(error);
+  }
+});
+
 module.exports = router;
