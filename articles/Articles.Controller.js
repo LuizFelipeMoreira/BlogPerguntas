@@ -81,4 +81,37 @@ router.post('/articles/update', async (req, res) => {
   }
 });
 
+router.get('/articles/pages/:num', async (req, res) => {
+  const { num } = req.params;
+  let offset = 0;
+
+  if (isNaN(num) || num == 1) {
+    offset = 0;
+  } else {
+    offset = parseInt(num) * 4;
+  }
+
+  const { count, rows } = await Article.findAndCountAll({ limit: 4, offset });
+  const categories = await Category.findAll();
+  //const articles = await Article.findAll();
+
+  console.log(offset);
+
+  let next;
+  if (offset + 4 >= count) {
+    next = false;
+  } else {
+    next = true;
+  }
+
+  const result = { next, count, rows };
+
+  res.render('admin/articles/page', {
+    categories,
+    count,
+    rows,
+    next,
+  });
+});
+
 module.exports = router;
