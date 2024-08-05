@@ -88,12 +88,15 @@ router.get('/articles/pages/:num', async (req, res) => {
   if (isNaN(num) || num == 1) {
     offset = 0;
   } else {
-    offset = parseInt(num) * 4;
+    offset = (parseInt(num) - 1) * 4;
   }
 
-  const { count, rows } = await Article.findAndCountAll({ limit: 4, offset });
+  const { count, rows } = await Article.findAndCountAll({
+    limit: 4,
+    offset,
+    order: [['id', 'DESC']],
+  });
   const categories = await Category.findAll();
-  //const articles = await Article.findAll();
 
   console.log(offset);
 
@@ -107,6 +110,7 @@ router.get('/articles/pages/:num', async (req, res) => {
   const result = { next, count, rows };
 
   res.render('admin/articles/page', {
+    page: parseInt(num),
     categories,
     count,
     rows,

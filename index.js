@@ -29,7 +29,7 @@ app.use('/', categoriesController);
 app.use('/', articlesController);
 
 app.get('/', async (req, res) => {
-  const articles = await Article.findAll({ order: [['id', 'DESC']] });
+  const articles = await Article.findAll({ order: [['id', 'DESC']], limit: 4 });
   const categories = await Category.findAll();
 
   res.render('index', { articles, categories });
