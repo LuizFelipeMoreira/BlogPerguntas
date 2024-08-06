@@ -5,10 +5,11 @@ const connection = require('./database/database');
 
 const categoriesController = require('./categories/CategoriesControllers');
 const articlesController = require('./articles/Articles.Controller');
+const usersController = require('./users/usersController');
 
-const Article = require('./articles/Article');
 const Category = require('./categories/Category');
-const { where } = require('sequelize');
+const Article = require('./articles/Article');
+const User = require('./users/User');
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -27,6 +28,7 @@ app.use(bodyParser.json());
 
 app.use('/', categoriesController);
 app.use('/', articlesController);
+app.use('/', usersController);
 
 app.get('/', async (req, res) => {
   const articles = await Article.findAll({ order: [['id', 'DESC']], limit: 4 });
