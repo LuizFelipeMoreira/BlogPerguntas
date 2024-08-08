@@ -4,7 +4,8 @@ const User = require('./User');
 const bcrypt = require('bcryptjs');
 
 router.get('/admin/users', async (req, res) => {
-  res.send('listagem de usuarios');
+  const users = await User.findAll({ raw: true });
+  res.render('./admin/users/index', { users });
 });
 
 router.get('/admin/users/create', (req, res) => {
