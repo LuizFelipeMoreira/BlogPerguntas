@@ -6,6 +6,4 @@ const User = connection.define('users', {
   password: { type: Sequelize.STRING, allowNull: false },
 });
 
-User.sync({ force: false });
-
 module.exports = User;

@@ -10,4 +10,10 @@ router.get('/admin/users/create', (req, res) => {
   res.render('./admin/users/create');
 });
 
+router.post('/users/create', async (req, res) => {
+  const { password, email } = req.body;
+
+  res.json({ password, email });
+});
+
 module.exports = router;
