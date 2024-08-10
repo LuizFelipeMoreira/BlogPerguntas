@@ -19,9 +19,9 @@ router.post('/users/create', async (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
-    const userExistent = User.findOne({ where: { email } });
+    const userExistent = await User.findOne({ where: { email } });
 
-    if (userExistent === undefined) {
+    if (!userExistent) {
       await User.create({ email, password: hash });
       res.redirect('/');
     } else {
