@@ -42,21 +42,15 @@ router.post('/authenticate', async (req, res) => {
   try {
     const user = await User.findOne({ where: { email } });
 
-    if (user !== undefined) {
-      const correct = bcrypt.compareSync(password, user.password);
-
-      if (correct) {
-        req.session.user = {
-          id: user.id,
-          email: user.email,
-        };
-        req.json(req.session.user);
-      } else {
-        res.redirect('/login');
-      }
-    } else {
-      res.redirect('/login');
+    if (!user || !bcrypt.compareSync(password, user.password)) {
+      return res.redirect('/login');
     }
-  } catch (error) {}
+
+    req.session.user = { id: user.id, email: user.email };
+    res.json(req.session.user);
+  } catch {
+    res.redirect('/login');
+  }
 });
+
 module.exports = router;
