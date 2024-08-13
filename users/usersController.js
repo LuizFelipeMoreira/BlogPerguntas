@@ -4,6 +4,8 @@ const User = require('./User');
 const bcrypt = require('bcryptjs');
 
 router.get('/admin/users', async (req, res) => {
+  if (!req.session.user) return res.redirect('/login');
+
   const users = await User.findAll({ raw: true });
   res.render('./admin/users/index', { users });
 });
@@ -47,7 +49,7 @@ router.post('/authenticate', async (req, res) => {
     }
 
     req.session.user = { id: user.id, email: user.email };
-    res.json(req.session.user);
+    res.redirect('/admin/articles');
   } catch {
     res.redirect('/login');
   }

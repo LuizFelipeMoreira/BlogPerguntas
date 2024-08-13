@@ -3,8 +3,9 @@ const router = express.Router();
 const Category = require('../categories/Category');
 const Article = require('./Article');
 const slugify = require('slugify');
+const adminAuth = require('../middlewares/login');
 
-router.get('/admin/articles', async (req, res) => {
+router.get('/admin/articles', adminAuth, async (req, res) => {
   const articles = await Article.findAll({
     include: [{ model: Category }],
   });
@@ -12,13 +13,13 @@ router.get('/admin/articles', async (req, res) => {
   res.render('./admin/articles/index', { articles });
 });
 
-router.get('/admin/articles/new', async (req, res) => {
+router.get('/admin/articles/new', adminAuth, async (req, res) => {
   const categories = await Category.findAll();
 
   res.render('./admin/articles/new', { categories });
 });
 
-router.post('/articles/save', async (req, res) => {
+router.post('/articles/save', adminAuth, async (req, res) => {
   const { title, body, category } = req.body;
 
   console.log('chegou na rota');
@@ -36,7 +37,7 @@ router.post('/articles/save', async (req, res) => {
   }
 });
 
-router.post('/articles/delete', async (req, res) => {
+router.post('/articles/delete', adminAuth, async (req, res) => {
   const { id } = req.body;
   const checkId = !isNaN(id) && id !== undefined;
 
@@ -48,7 +49,7 @@ router.post('/articles/delete', async (req, res) => {
   }
 });
 
-router.get('/admin/articles/edit/:id', async (req, res) => {
+router.get('/admin/articles/edit/:id', adminAuth, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -62,7 +63,7 @@ router.get('/admin/articles/edit/:id', async (req, res) => {
   }
 });
 
-router.post('/articles/update', async (req, res) => {
+router.post('/articles/update', adminAuth, async (req, res) => {
   const { id, title, body, category } = req.body;
 
   if (isNaN(id)) {
