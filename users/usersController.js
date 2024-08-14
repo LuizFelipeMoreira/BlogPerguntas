@@ -55,4 +55,9 @@ router.post('/authenticate', async (req, res) => {
   }
 });
 
+router.get('/logout', (req, res) => {
+  req.sesion.user = null;
+  res.redirect('/');
+});
+
 module.exports = router;
