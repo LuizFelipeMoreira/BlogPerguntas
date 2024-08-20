@@ -1,6 +1,8 @@
 <div align="center">
   <h1>Blog de Perguntas e Respostas</h1>
 </div>
+<img width="1440" alt="Captura de Tela 2024-08-20 às 20 40 35" src="https://github.com/user-attachments/assets/fc020b49-3a8c-4e93-b3f9-aec253c1fa71">
+
 Este é um projeto de backend para um blog de perguntas e respostas, desenvolvido com o objetivo de fornecer uma plataforma onde os usuários possam criar, editar categorias e responder a artigos. A aplicação foi construída utilizando Node.js, Express e MySQL para oferecer uma experiência robusta e escalável.
 
 ## Funcionalidades
