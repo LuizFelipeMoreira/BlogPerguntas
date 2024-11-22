@@ -51,11 +51,9 @@ app.get('/:slug', async (req, res) => {
     const article = await Article.findOne({ where: { slug } });
     const categories = await Category.findAll();
 
-    if (article !== undefined) {
-      res.render('article', { article, categories });
-    } else {
-      res.redirect('/');
-    }
+    if (!article) res.redirect('/');
+
+    res.render('article', { article, categories });
   } catch (error) {
     res.redirect('/');
   }
@@ -70,19 +68,13 @@ app.get('/category/:slug', async (req, res) => {
       include: [{ model: Article }],
     });
 
-    if (categorie) {
-      console.log('entrou no if');
-    }
+    if (!categorie) res.redirect('/');
 
-    if (categorie !== undefined) {
-      const categories = await Category.findAll({
-        incude: [{ model: Article }],
-      });
+    const categories = await Category.findAll({
+      incude: [{ model: Article }],
+    });
 
-      res.render('index', { categories, articles: categorie.articles });
-    } else {
-      res.redirect('/');
-    }
+    res.render('index', { categories, articles: categorie.articles });
   } catch (error) {}
 });
 
